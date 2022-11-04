@@ -1,6 +1,6 @@
-import { FC } from 'react';
+import { Page } from '../types/next';
 
-const IndexPage: FC = () => {
+const IndexPage: Page = () => {
   return <h1>Polly</h1>;
 };
 

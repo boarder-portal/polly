@@ -1,10 +1,6 @@
-import { FC, ReactNode } from 'react';
+import { Layout } from '../types/next';
 
-export interface RootLayoutProps {
-  children: ReactNode;
-}
-
-const RootLayout: FC<RootLayoutProps> = (props) => {
+const RootLayout: Layout = (props) => {
   const { children } = props;
 
   return (
