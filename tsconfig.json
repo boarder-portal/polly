@@ -22,6 +22,17 @@
       {
         "name": "next"
       }
+    ],
+    "baseUrl": ".",
+    "paths": {
+      "server/*": ["./app/server/*"],
+      "client/*": ["./app/client/*"],
+      "common/*": ["./app/common/*"]
+    },
+    "typeRoots": [
+      "node_modules/@types",
+      "app/common/typings",
+      "app/client/typings"
     ]
   },
   "ts-node": {
@@ -31,10 +42,8 @@
     }
   },
   "include": [
-    "next-env.d.ts",
     "**/*.ts",
     "**/*.tsx",
-    ".next/types/**/*.ts"
   ],
   "exclude": [
     "node_modules"

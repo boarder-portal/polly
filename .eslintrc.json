@@ -1,6 +1,28 @@
 {
-  "extends": "next/core-web-vitals",
-  "plugins": ["eslint-plugin-import-helpers"],
+  "parser": "@typescript-eslint/parser",
+  "extends": [
+    "eslint:recommended",
+    "plugin:@typescript-eslint/eslint-recommended",
+    "plugin:@typescript-eslint/recommended",
+    "plugin:react/recommended"
+  ],
+  "plugins": [
+    "@typescript-eslint",
+    "react-hooks",
+    "eslint-plugin-import-helpers"
+  ],
+  "settings": {
+    "react": {
+      "version": "detect"
+    }
+  },
+  "parserOptions": {
+    "ecmaVersion": 6,
+    "sourceType": "module",
+    "ecmaFeatures": {
+      "modules": true
+    }
+  },
   "rules": {
     "import-helpers/order-imports": [
       "error",
@@ -11,13 +33,36 @@
           "module",
           "/constants/",
           "/(/|^)types?(/|$)/",
+          "/constants\\//",
           "/utilities\\//",
           "/hooks\\//",
           "/components\\//",
+          "/db\\//",
+          "/api\\//",
+          "/pages\\//",
+          "/common\\//",
+          "/client\\//",
+          "/server\\//",
           ["parent", "sibling", "index"]
         ]
       }
     ],
+
+    "@typescript-eslint/ban-ts-comment": 0,
+    "@typescript-eslint/ban-ts-ignore": 0,
+    "@typescript-eslint/ban-types": 0,
+    "@typescript-eslint/explicit-function-return-type": 0,
+    "@typescript-eslint/indent": 0,
+    "@typescript-eslint/no-empty-interface": 0,
+    "@typescript-eslint/no-explicit-any": 0,
+    "@typescript-eslint/no-non-null-assertion": 2,
+    "@typescript-eslint/no-var-requires": 0,
+    "@typescript-eslint/no-this-alias": 0,
+
+    "react/jsx-uses-react": 0,
+    "react/react-in-jsx-scope": 0,
+    "react-hooks/rules-of-hooks": 2,
+    "react-hooks/exhaustive-deps": 2,
 
     "array-bracket-spacing": ["error", "never"],
     "block-spacing": ["error", "always"],
