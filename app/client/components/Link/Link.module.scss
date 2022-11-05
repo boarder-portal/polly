@@ -1,6 +1,7 @@
 @layer component {
   .root {
     color: var(--purple3);
+    cursor: pointer;
     transition: 0.2s ease;
 
     &:hover {

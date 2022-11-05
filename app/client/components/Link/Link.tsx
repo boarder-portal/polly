@@ -1,17 +1,22 @@
-import { forwardRef, memo } from 'react';
+import { FC, memo } from 'react';
 import { Link as RouterLink, LinkProps } from 'react-router-dom';
 import classNames from 'classnames';
 
 import * as styles from './Link.module.scss';
 
-interface Props extends LinkProps {}
+interface Props extends Omit<LinkProps, 'to'> {
+  to?: LinkProps['to'];
+}
 
-const Link = forwardRef<HTMLAnchorElement | null, Props>((props, ref) => {
-  const { className, ...rest } = props;
+const Link: FC<Props> = (props) => {
+  const { className, to, ...rest } = props;
+  const rootClassName = classNames(styles.root, className);
 
-  return <RouterLink className={classNames(styles.root, className)} ref={ref} {...rest} />;
-});
+  if (!to) {
+    return <span className={rootClassName} {...rest} />;
+  }
 
-Link.displayName = 'Link';
+  return <RouterLink className={rootClassName} to={to} {...rest} />;
+};
 
 export default memo(Link);

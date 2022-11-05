@@ -1,9 +1,9 @@
 import { Middleware as KoaMiddleware, ParameterizedContext } from 'koa';
 
-import { UserData } from 'server/db/models/user';
+import { User } from 'server/db/models/user';
 
 export interface State {
-  user: UserData | null;
+  user: User | null;
 }
 
 export type Context<Body = unknown> = ParameterizedContext<State, {}, Body>;

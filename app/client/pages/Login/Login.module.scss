@@ -1,0 +1,15 @@
+.error {
+  text-align: center;
+  color: var(--purple4);
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  width: 320px;
+}
+
+.root {
+  flex-grow: 1;
+}

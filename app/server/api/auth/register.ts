@@ -2,7 +2,7 @@ import { USER_COOKIE_NAME } from 'server/constants/auth';
 
 import { Middleware } from 'server/types/koa';
 
-import User, { UserData } from 'server/db/models/user';
+import UserModel, { User } from 'server/db/models/user';
 
 export interface RegisterRequest {
   login: string;
@@ -10,19 +10,19 @@ export interface RegisterRequest {
 }
 
 export interface RegisterResponse {
-  user: UserData;
+  user: User;
 }
 
 const register: Middleware<RegisterResponse> = async (ctx) => {
   const { login, password }: RegisterRequest = ctx.request.body;
 
-  const userWithLogin = await User.findOne({ login });
+  const userWithLogin = await UserModel.findOne({ login });
 
   if (userWithLogin) {
     return ctx.throw(409);
   }
 
-  const user = new User({
+  const user = new UserModel({
     login,
     password,
   });

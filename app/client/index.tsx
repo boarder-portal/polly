@@ -1,6 +1,8 @@
 import './styles/globals.scss';
 import './styles/palette.scss';
 
+import './plugins/atom';
+
 import { createRoot } from 'react-dom/client';
 import { BrowserRouter } from 'react-router-dom';
 

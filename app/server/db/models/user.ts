@@ -3,7 +3,7 @@ import { Schema } from 'mongoose';
 
 import db from 'server/db';
 
-export interface UserData {
+export interface User {
   id: string;
   login: string;
   password?: never;
@@ -22,14 +22,14 @@ const userSchema = new Schema(
       getId(): string {
         return String(this._id);
       },
-      toData(): UserData {
+      toData(): User {
         return {
           id: String(this._id),
           login: this.login ?? '',
         };
       },
       async validatePassword(password): Promise<boolean> {
-        return verify(password, this.password ?? '');
+        return verify(this.password ?? '', password);
       },
     },
   },
@@ -49,6 +49,6 @@ userSchema.pre('save', async function (next) {
   }
 });
 
-const User = db.model('user', userSchema, 'users');
+const UserModel = db.model('user', userSchema, 'users');
 
-export default User;
+export default UserModel;

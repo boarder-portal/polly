@@ -1,6 +1,8 @@
 import { FC, FormEvent, useCallback, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
+import { urls } from 'client/constants/urls';
+
 import authHttpClient from 'client/utilities/HttpClient/AuthHttpClient';
 
 import usePromise from 'client/hooks/usePromise';
@@ -13,9 +15,9 @@ import Button from 'client/components/Button/Button';
 
 import { userAtom } from 'client/atoms/user';
 
-import * as styles from './Register.module.scss';
+import * as styles from './Login.module.scss';
 
-const RegisterPage: FC = () => {
+const LoginPage: FC = () => {
   const [login, setLogin] = useState('');
   const [password, setPassword] = useState('');
   const { setValue: setUser } = useAtom(userAtom);
@@ -23,11 +25,11 @@ const RegisterPage: FC = () => {
   const navigate = useNavigate();
 
   const {
-    run: register,
+    run: loginRequest,
     isLoading,
     isError,
   } = usePromise(() =>
-    authHttpClient.register({
+    authHttpClient.login({
       login,
       password,
     }),
@@ -37,29 +39,29 @@ const RegisterPage: FC = () => {
     async (e: FormEvent) => {
       e.preventDefault();
 
-      const { user } = await register();
+      const { user } = await loginRequest();
 
       setUser(user);
-      navigate('/');
+      navigate(urls.home);
     },
-    [navigate, register, setUser],
+    [loginRequest, navigate, setUser],
   );
 
   return (
     <Flex className={styles.root} direction="column" alignItems="center" justifyContent="center" between={3}>
-      <Heading level={1}>Регистрация</Heading>
+      <Heading level={1}>Вход</Heading>
 
       <form className={styles.form} onSubmit={handleSubmit}>
         <Input required type="text" placeholder="Логин" value={login} onChange={setLogin} />
 
         <Input required type="password" placeholder="Пароль" value={password} onChange={setPassword} />
 
-        <Button disabled={isLoading}>Регистрация</Button>
+        <Button disabled={isLoading}>Войти</Button>
 
-        <span className={styles.error}>{isError ? 'Ошибка регистрации' : '\u00a0'}</span>
+        <span className={styles.error}>{isError ? 'Неверный логин или пароль' : '\u00a0'}</span>
       </form>
     </Flex>
   );
 };
 
-export default RegisterPage;
+export default LoginPage;
