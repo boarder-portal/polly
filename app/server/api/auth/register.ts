@@ -22,12 +22,10 @@ const register: Middleware<RegisterResponse> = async (ctx) => {
     return ctx.throw(409);
   }
 
-  const user = new UserModel({
+  const user = await UserModel.create({
     login,
     password,
   });
-
-  await user.save();
 
   ctx.cookies.set(USER_COOKIE_NAME, user.getId(), {
     expires: new Date(2030, 1),

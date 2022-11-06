@@ -1,6 +1,10 @@
 :root {
   --layoutWidth: 1200px;
   --layoutPadding: 20px;
+
+  @media (max-width: 600px) {
+    --layoutWidth: 100%;
+  }
 }
 
 @layer base, component, override;
