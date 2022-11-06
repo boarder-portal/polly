@@ -8,16 +8,16 @@ class AuthHttpClient extends HttpClient {
     return `${super.getBaseUrl()}/auth`;
   }
 
-  async register(request: RegisterRequest): Promise<RegisterResponse> {
-    return this.post('/register', request);
+  async register(request: RegisterRequest, signal?: AbortSignal): Promise<RegisterResponse> {
+    return this.post('/register', request, signal);
   }
 
-  async logout(): Promise<void> {
-    return this.post('/logout');
+  async logout(signal?: AbortSignal): Promise<void> {
+    return this.post('/logout', signal);
   }
 
-  async login(request: LoginRequest): Promise<LoginResponse> {
-    return this.post('/login', request);
+  async login(request: LoginRequest, signal?: AbortSignal): Promise<LoginResponse> {
+    return this.post('/login', request, signal);
   }
 }
 

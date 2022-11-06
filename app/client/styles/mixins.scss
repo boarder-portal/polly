@@ -1,0 +1,17 @@
+@mixin colored($color, $hoverColor, $transition: 0.2s ease) {
+  color: $color;
+  transition: $transition;
+
+  &:hover {
+    color: $hoverColor;
+  }
+}
+
+@mixin backgroundColored($color, $hoverColor, $transition: 0.2s ease) {
+  background-color: $color;
+  transition: $transition;
+
+  &:hover {
+    color: $hoverColor;
+  }
+}

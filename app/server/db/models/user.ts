@@ -1,5 +1,8 @@
 import { hash, verify } from 'argon2';
 import { Schema } from 'mongoose';
+import escapeRegExp from 'lodash/escapeRegExp';
+
+import { ModelInstance } from 'server/types/mongoose';
 
 import db from 'server/db';
 
@@ -50,5 +53,15 @@ userSchema.pre('save', async function (next) {
 });
 
 const UserModel = db.model('user', userSchema, 'users');
+
+export async function searchByQuery(query: string): Promise<UserDbInstance[]> {
+  return UserModel.find({
+    login: new RegExp(escapeRegExp(query), 'i'),
+  })
+    .limit(5)
+    .exec();
+}
+
+export type UserDbInstance = ModelInstance<typeof UserModel>;
 
 export default UserModel;

@@ -26,11 +26,14 @@ const LoginPage: FC = () => {
     run: loginRequest,
     isLoading,
     isError,
-  } = usePromise(() =>
-    authHttpClient.login({
-      login,
-      password,
-    }),
+  } = usePromise((signal) =>
+    authHttpClient.login(
+      {
+        login,
+        password,
+      },
+      signal,
+    ),
   );
 
   const handleSubmit = useCallback(

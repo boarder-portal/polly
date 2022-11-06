@@ -24,11 +24,14 @@ const RegisterPage: FC = () => {
     run: register,
     isLoading,
     isError,
-  } = usePromise(() =>
-    authHttpClient.register({
-      login,
-      password,
-    }),
+  } = usePromise((signal) =>
+    authHttpClient.register(
+      {
+        login,
+        password,
+      },
+      signal,
+    ),
   );
 
   const handleSubmit = useCallback(

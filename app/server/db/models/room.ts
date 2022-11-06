@@ -1,4 +1,7 @@
 import { Schema } from 'mongoose';
+import { ObjectId } from 'mongodb';
+
+import { ModelInstance } from 'server/types/mongoose';
 
 import { isDefined } from 'common/utilities/is';
 
@@ -40,5 +43,15 @@ const roomSchema = new Schema(
 );
 
 const RoomModel = db.model('room', roomSchema, 'rooms');
+
+export type RoomDbInstance = ModelInstance<typeof RoomModel>;
+
+export async function getOwnRooms(userId: string): Promise<RoomDbInstance[]> {
+  const userObjectId = new ObjectId(userId);
+
+  return RoomModel.find({
+    members: userObjectId,
+  });
+}
 
 export default RoomModel;

@@ -1,11 +1,9 @@
+@import "client/styles/mixins.scss";
+
 @layer component {
   .root {
-    color: var(--purple3);
     cursor: pointer;
-    transition: 0.2s ease;
 
-    &:hover {
-      color: var(--purple4);
-    }
+    @include colored(var(--purple3), var(--purple4));
   }
 }

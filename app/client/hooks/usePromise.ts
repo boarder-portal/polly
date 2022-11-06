@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 import { AnyAsyncValue } from 'client/types/async';
 
@@ -8,7 +8,7 @@ export type UsePromise<T> = AnyAsyncValue<T> & {
   run(): Promise<T>;
 };
 
-export default function usePromise<T>(getPromise: () => Promise<T>): UsePromise<T> {
+export default function usePromise<T>(getPromise: (signal: AbortSignal) => Promise<T>): UsePromise<T> {
   const [promiseValue, setPromiseValue] = useState<AnyAsyncValue<T>>({
     value: null,
     isLoading: false,
@@ -16,10 +16,23 @@ export default function usePromise<T>(getPromise: () => Promise<T>): UsePromise<
     isError: false,
     error: null,
   });
+  const abortControllerRef = useRef<AbortController | null>(null);
+
+  useEffect(() => {
+    return () => {
+      abortControllerRef.current?.abort();
+    };
+  }, []);
 
   return {
     ...promiseValue,
     run: useImmutableCallback(async () => {
+      abortControllerRef.current?.abort();
+
+      const controller = new AbortController();
+
+      abortControllerRef.current = controller;
+
       try {
         setPromiseValue({
           value: null,
@@ -29,7 +42,7 @@ export default function usePromise<T>(getPromise: () => Promise<T>): UsePromise<
           error: null,
         });
 
-        const result = await getPromise();
+        const result = await getPromise(controller.signal);
 
         setPromiseValue({
           value: result,

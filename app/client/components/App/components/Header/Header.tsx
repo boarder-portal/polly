@@ -17,7 +17,7 @@ interface Props {}
 const Header: FC<Props> = () => {
   const { value: user, setValue: setUser } = useSharedStoreValue('user');
 
-  const { run: logout } = usePromise(() => authHttpClient.logout());
+  const { run: logout } = usePromise((signal) => authHttpClient.logout(signal));
 
   const handleLogoutClick = useCallback(async () => {
     await logout();
