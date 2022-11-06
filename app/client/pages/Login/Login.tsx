@@ -6,21 +6,19 @@ import { urls } from 'client/constants/urls';
 import authHttpClient from 'client/utilities/HttpClient/AuthHttpClient';
 
 import usePromise from 'client/hooks/usePromise';
-import useAtom from 'client/hooks/useAtom';
+import useSharedStoreValue from 'client/hooks/useSharedStoreValue';
 
 import Flex from 'client/components/Flex/Flex';
 import Heading from 'client/components/Heading/Heading';
 import Input from 'client/components/Input/Input';
 import Button from 'client/components/Button/Button';
 
-import { userAtom } from 'client/atoms/user';
-
 import * as styles from './Login.module.scss';
 
 const LoginPage: FC = () => {
   const [login, setLogin] = useState('');
   const [password, setPassword] = useState('');
-  const { setValue: setUser } = useAtom(userAtom);
+  const { setValue: setUser } = useSharedStoreValue('user');
 
   const navigate = useNavigate();
 

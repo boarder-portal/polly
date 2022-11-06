@@ -5,19 +5,17 @@ import { urls } from 'client/constants/urls';
 import authHttpClient from 'client/utilities/HttpClient/AuthHttpClient';
 
 import usePromise from 'client/hooks/usePromise';
-import useAtom from 'client/hooks/useAtom';
+import useSharedStoreValue from 'client/hooks/useSharedStoreValue';
 
 import Flex from 'client/components/Flex/Flex';
 import Link from 'client/components/Link/Link';
-
-import { userAtom } from 'client/atoms/user';
 
 import * as styles from './Header.module.scss';
 
 interface Props {}
 
 const Header: FC<Props> = () => {
-  const { value: user, setValue: setUser } = useAtom(userAtom);
+  const { value: user, setValue: setUser } = useSharedStoreValue('user');
 
   const { run: logout } = usePromise(() => authHttpClient.logout());
 
