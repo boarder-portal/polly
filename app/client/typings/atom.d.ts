@@ -1,4 +1,4 @@
-import { AtomsJson } from 'client/utilities/Atom';
+import { AtomsJson } from 'common/utilities/Atom';
 
 declare global {
   interface Window {

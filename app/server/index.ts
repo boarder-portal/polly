@@ -6,11 +6,9 @@ import mount from 'koa-mount';
 
 import { USER_COOKIE_NAME } from 'server/constants/auth';
 
-import Atom from 'client/utilities/Atom';
+import AtomStore from 'common/utilities/AtomStore';
 
 import UserModel from 'server/db/models/user';
-
-import { userAtom } from 'client/atoms/user';
 
 import { app, server } from 'server/server';
 import api from 'server/api';
@@ -38,13 +36,16 @@ app.use(async (ctx, next) => {
 app.use(api.routes());
 app.use(api.allowedMethods());
 app.use(async (ctx) => {
+  const atomStore = new AtomStore();
+  const userAtom = atomStore.atom('user');
+
   userAtom.setValue(ctx.state.user);
 
   ctx.type = 'text/html';
   ctx.body = indexHtmlContents.replace(
     '"__ATOM_VALUES__"',
     `
-    window.__ATOM_VALUES__ = ${JSON.stringify(Atom.toJSON()).replace(/</g, '\\u003c')};
+    window.__ATOM_VALUES__ = ${JSON.stringify(atomStore.toJSON()).replace(/</g, '\\u003c')};
   `,
   );
 });
