@@ -12,6 +12,6 @@
   transition: $transition;
 
   &:hover {
-    color: $hoverColor;
+    background-color: $hoverColor;
   }
 }
